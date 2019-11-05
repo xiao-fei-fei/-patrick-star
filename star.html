@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: #F2ACAD;
+      display: flex;
+      height: 100vh;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .face {
+      position: relative;
+    }
+
+    #code {
+      width: 400px;
+      height: 400px;
+      overflow: hidden;
+      position: fixed;
+      top: 0;
+      left: 0;
+      border: 1px solid #ddd;
+      padding: 10px 0;
+    }
+
+    #code::before {
+      content: 'tips: 点击空白处加快速度';
+      position: fixed;
+      left: 240px;
+    }
+
+    .haha {
+      background-color: #FF485F;
+      width: 200px;
+      height: 20px;
+      border-top: 50px solid #7d0c0e;
+      border-radius: 50% 50% 50% 50%/31% 31% 69% 69%;
+      transform: translateY(-10px);
+      visibility: hidden;
+    }
+  </style>
+  <style id="styleTag"></style>
+</head>
+
+<body>
+  <pre id="code"></pre>
+  <div class="face">
+    <div class="eyebrow left"></div>
+    <div class="eyebrow right"></div>
+    <div style="text-align:center">
+      <div class="eye left">
+        <div class="pupil left"></div>
+      </div>
+      <div class="eye right">
+        <div class="pupil right"></div>
+      </div>
+    </div>
+    <div>
+      <div class="blush left"></div>
+      <div class="blush right"></div>
+    </div>
+    <div class="mouth">
+      <div class="haha"></div>
+    </div>
+  </div>
+  <script>
+    const str =
+      `
+      /*
+      * 画一只派大星给你看
+      * 看着屏幕正中间哦
+      * 先来画她的眉毛
+      */
+    .eyebrow {
+      width: 80px;
+      border: 3px solid #000;
+      position: absolute;
+      top: -45px;
+    }
+    /*
+    * 调整一下左边的眉毛位置
+    */
+    .eyebrow.left {
+      transform: rotate(-30deg);
+      left: 23%;
+    }
+    /*
+    * 再调整一下右边的眉毛位置
+    */
+    .eyebrow.right {
+      transform: rotate(30deg);
+      right: 23%;
+    }
+    /*
+    * 开始画他的眼睛
+    */
+    .eye {
+      width: 100px;
+      height: 100px;
+      background-color: #FFF;
+      border-radius: 50%;
+      display: inline-block;
+      position: relative;
+    }
+    .eye.left {
+      margin-right: 12px;
+    }
+    .eye.right {
+      margin-left: 12px;
+    }
+    /*
+    * 还有他的眼珠子
+    */
+    .pupil {
+      position: absolute;
+      background-color: #000;
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      top: 40%;
+      right: 50%;
+      transform: translate(50%, -50%);
+    }
+    /*
+    * 然后开始画她的脸蛋
+    */
+    .blush {
+      background-color: #e92929;
+      width: 100px;
+      height: 30px;
+      border-radius: 50%;
+      display: inline-block;
+      opacity: 0.5;
+      margin-top: 20px;
+    }
+    .blush.left {
+      margin-right: 100px;
+    }
+
+    .blush.right {
+      margin-left: 100px;
+    }
+    /*
+    * 最后画上她的嘴巴
+    */
+    .mouth {
+      margin: 0 auto;
+      width: 200px;
+      height: 20px;
+      border-radius: 0% 0% 100% 100%;
+      border-bottom: 4px solid;
+    }
+    /*
+    * 画完了，最后再加个动画吧
+    */
+    .face:hover .pupil {
+      width: 10px;
+      height: 10px;
+      top: 20px;
+      right: 30px;
+    }
+
+    .face:hover .haha {
+      visibility: visible;
+    }
+
+    .face:hover .eyebrow {
+      animation: eyebrowHaha 2s infinite ease-in-out;
+    }
+
+    @keyframes eyebrowHaha {
+      0% {
+        top: -45px;
+      }
+
+      50% {
+        top: -60px;
+      }
+
+      100% {
+        top: -45px;
+      }
+    }
+    /*
+    * 大功告成！鼠标移到派大星的脸上看看~
+    */`
+    let styleTag = document.querySelector('#styleTag');
+    let code = document.querySelector('#code');
+    let n = 0
+    let speed = 50
+    setTimeout(function timer() {
+      n += 1
+      styleTag.innerHTML = str.substring(0, n)
+      code.innerHTML = str.substring(0, n)
+      code.scrollTop = code.scrollHeight
+      if (n <= str.length) {
+        setTimeout(timer, speed)
+      }
+    }, 50);
+    document.querySelector('body').onclick = function() {
+      speed -= 5
+    }
+  </script>
+</body>
+
+</html>
